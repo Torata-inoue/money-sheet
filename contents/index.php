@@ -1,2 +1,5 @@
 <?php
-echo 'Hello World';
+
+require 'vendor/autoload.php';
+
+echo (new \App\Services\SheetService())->exec();
