@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Services;
-
-use App\Domains\Sheet;
+namespace App\Domains\Sheet;
 
 class SheetService
 {
