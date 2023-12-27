@@ -23,7 +23,7 @@ class RakutenCardHistory implements HistoryInterface
 
     public function getTradingDate(): Carbon
     {
-        return Carbon::createFromFormat('Y/m/d', $this->getTradingDate());
+        return Carbon::createFromFormat('Y/m/d', $this->trading_day);
     }
 
     public function getClassification(): string
