@@ -18,10 +18,17 @@ class CSVParser
         if ($this->type->getCharacterCode() !== 'UTF-8') {
             stream_filter_append($handle, 'convert.iconv.'.$this->type->getCharacterCode().'/UTF-8//IGNORE');
         }
+
         $rows = [];
+        $remove_header = false;
         while ($row = fgetcsv($handle)) {
-            $rows[] = $row;
-            var_dump($row);
+            if (!$remove_header) {
+                $remove_header = true;
+                continue;
+            }
+            $history_class = $this->type->getHistoryClass();
+            $history = new $history_class($row);
+            var_dump($history);
         }
     }
 }

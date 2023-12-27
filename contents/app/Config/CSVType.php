@@ -2,6 +2,9 @@
 
 namespace App\Config;
 
+use App\Domains\History\HistoryInterface;
+use App\Domains\History\RakutenBankHistory;
+
 enum CSVType
 {
 //    case UFJ;
@@ -24,6 +27,20 @@ enum CSVType
         return match ($this) {
 //            self::UFJ => 'ufj.csv',
             self::RAKUTEN_BANK => 'rakuten_bank.csv',
+//            self::RAKUTEN_MINE => 'rakuten_7271.csv',
+//            self::RAKUTEN_SHARE => 'rakuten_1560.csv',
+        };
+    }
+
+    /**
+     * @template T of HistoryInterface
+     * @return class-string<T>
+     */
+    public function getHistoryClass(): string
+    {
+        return match ($this) {
+//            self::UFJ => 'ufj.csv',
+            self::RAKUTEN_BANK => RakutenBankHistory::class,
 //            self::RAKUTEN_MINE => 'rakuten_7271.csv',
 //            self::RAKUTEN_SHARE => 'rakuten_1560.csv',
         };
