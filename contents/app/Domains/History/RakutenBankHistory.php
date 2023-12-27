@@ -48,4 +48,9 @@ readonly class RakutenBankHistory implements HistoryInterface
     {
         return str_starts_with($this->content, 'Mastercardデビット');
     }
+
+    public static function skipRow(array $row): bool
+    {
+        return $row[0] === '取引日';
+    }
 }

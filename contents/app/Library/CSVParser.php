@@ -3,15 +3,16 @@
 namespace App\Library;
 
 use App\Config\CSVType;
+use App\Domains\History\HistoryInterface;
 use Carbon\Carbon;
 
-class CSVParser
+readonly class CSVParser
 {
     public function __construct(private CSVType $type)
     {
     }
 
-    public function parse(Carbon $carbon)
+    public function parse(Carbon $carbon): void
     {
         $dir = __DIR__ . "/../../csv/{$carbon->format('Ym')}/";
         $handle = fopen($dir . $this->type->getFileName(), 'r');
@@ -20,13 +21,12 @@ class CSVParser
         }
 
         $rows = [];
-        $remove_header = false;
         while ($row = fgetcsv($handle)) {
-            if (!$remove_header) {
-                $remove_header = true;
+            /** @var class-string<HistoryInterface> $history_class */
+            $history_class = $this->type->getHistoryClass();
+            if ($history_class::skipRow($row)) {
                 continue;
             }
-            $history_class = $this->type->getHistoryClass();
             $history = new $history_class($row);
             var_dump($history);
         }

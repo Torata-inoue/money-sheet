@@ -33,8 +33,7 @@ enum CSVType
     }
 
     /**
-     * @template T of HistoryInterface
-     * @return class-string<T>
+     * @return class-string<HistoryInterface>
      */
     public function getHistoryClass(): string
     {

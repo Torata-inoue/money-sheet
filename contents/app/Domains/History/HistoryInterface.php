@@ -18,4 +18,6 @@ interface HistoryInterface
     public function getContent(): string;
 
     public function isDescribe(): bool;
+
+    public static function skipRow(array $row): bool;
 }
