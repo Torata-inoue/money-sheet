@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library;
+namespace App\Library\Parser;
 
 use App\Config\CSVType;
 use App\Domains\History\HistoryInterface;
@@ -12,14 +12,13 @@ readonly class CSVParser
     {
     }
 
-    public function parse(Carbon $carbon): void
+    public function parse(Carbon $carbon): array
     {
-        $dir = __DIR__ . "/../../csv/{$carbon->format('Ym')}/";
+        $dir = __DIR__ . "/../../../csv/{$carbon->format('Ym')}/";
         $handle = fopen($dir . $this->type->getFileName(), 'r');
         if ($this->type->getCharacterCode() !== 'UTF-8') {
             stream_filter_append($handle, 'convert.iconv.'.$this->type->getCharacterCode().'/UTF-8//IGNORE');
         }
-
         $rows = [];
         while ($row = fgetcsv($handle)) {
             /** @var class-string<HistoryInterface> $history_class */
@@ -27,8 +26,8 @@ readonly class CSVParser
             if ($history_class::skipRow($row)) {
                 continue;
             }
-            $history = new $history_class($row);
-            var_dump($history);
+            $rows[] = new $history_class($row, $this->type->getCardName());
         }
+        return $rows;
     }
 }

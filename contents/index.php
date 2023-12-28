@@ -2,4 +2,5 @@
 
 require 'bootstrap/bootstrap.php';
 
-(new \App\Services\Service())->exec();
+$provider = new \App\Library\Provider\CollectionProvider();
+(new \App\Services\Service($provider))->exec();
