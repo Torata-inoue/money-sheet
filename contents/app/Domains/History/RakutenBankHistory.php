@@ -14,7 +14,7 @@ readonly class RakutenBankHistory implements HistoryInterface
     private string $money;
     private string $content;
 
-    public function __construct(array $row)
+    public function __construct(array $row, private string $card_name)
     {
         $this->trading_day = $row[self::TRADING_DAY];
         $this->money = $row[self::MONEY];
@@ -52,5 +52,10 @@ readonly class RakutenBankHistory implements HistoryInterface
     public static function skipRow(array $row): bool
     {
         return $row[0] === '取引日';
+    }
+
+    public function getCardName(): string
+    {
+        return $this->card_name;
     }
 }

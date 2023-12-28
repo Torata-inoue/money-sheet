@@ -14,7 +14,7 @@ class RakutenCardHistory implements HistoryInterface
     private string $money;
     private string $content;
 
-    public function __construct(array $row)
+    public function __construct(array $row, private string $card_name)
     {
         $this->trading_day = $row[self::TRADING_DAY];
         $this->money = $row[self::MONEY];
@@ -49,5 +49,10 @@ class RakutenCardHistory implements HistoryInterface
     public static function skipRow(array $row): bool
     {
         return empty($row[0]);
+    }
+
+    public function getCardName(): string
+    {
+        return $this->card_name;
     }
 }

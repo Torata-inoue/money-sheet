@@ -6,6 +6,10 @@ use Carbon\Carbon;
 
 interface HistoryInterface
 {
+    public function __construct(array $row, string $card_name);
+
+    public function getCardName(): string;
+
     public function getTradingDate(): Carbon;
 
     /**
