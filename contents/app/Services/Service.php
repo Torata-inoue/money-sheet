@@ -17,9 +17,8 @@ readonly class Service
     ) {
     }
 
-    public function exec(): void
+    public function exec(Carbon $carbon): void
     {
-        $carbon = Carbon::parse('2023-11-01');
         foreach (CSVType::cases() as $type) {
             $collection = $this->provider->singleton($type->getSheetType());
             $parser = new CSVParser($type);
