@@ -3,17 +3,21 @@
 namespace App\Services;
 
 use App\Config\CSVType;
+use App\Config\SheetType;
+use App\Domains\Sheet\SheetRepository;
 use App\Library\Parser\CSVParser;
 use App\Library\Provider\CollectionProvider;
 use Carbon\Carbon;
 
-class Service
+readonly class Service
 {
-    public function __construct(private CollectionProvider $provider)
-    {
+    public function __construct(
+        private CollectionProvider $provider,
+        private SheetRepository $sheetRepository
+    ) {
     }
 
-    public function exec()
+    public function exec(): void
     {
         $carbon = Carbon::parse('2023-11-01');
         foreach (CSVType::cases() as $type) {
@@ -22,6 +26,10 @@ class Service
             $collection->merge($parser->parse($carbon));
         }
 
-        var_dump($this->provider);
+        foreach (SheetType::cases() as $sheetType) {
+            $collection = $this->provider->singleton($sheetType->getName());
+//            var_dump($collection->toArray());
+            $this->sheetRepository->write($sheetType->getName(), $collection->toArray());
+        }
     }
 }

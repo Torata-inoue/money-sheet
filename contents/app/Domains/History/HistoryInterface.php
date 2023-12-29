@@ -24,4 +24,6 @@ interface HistoryInterface
     public function isDescribe(): bool;
 
     public static function skipRow(array $row): bool;
+
+    public function toArray(): array;
 }

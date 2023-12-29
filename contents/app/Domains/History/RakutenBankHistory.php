@@ -58,4 +58,15 @@ readonly class RakutenBankHistory implements HistoryInterface
     {
         return $this->card_name;
     }
+
+    public function toArray(): array
+    {
+        return [
+            $this->getTradingDate()->format('Y/m/d'),
+            $this->getClassification(),
+            $this->getMoney(),
+            $this->getContent(),
+            $this->getCardName()
+        ];
+    }
 }

@@ -24,4 +24,17 @@ class Collection
     {
         $this->items = array_merge($this->items, $items);
     }
+
+    public function toArray(): array
+    {
+        $this->sortByDate();
+        return array_map(fn (HistoryInterface $history) => $history->toArray(), $this->items);
+    }
+
+    private function sortByDate(): void
+    {
+        usort($this->items, function (HistoryInterface $a, HistoryInterface $b) {
+            return $a->getTradingDate()->format('Ymd') <=> $b->getTradingDate()->format('Ymd');
+        });
+    }
 }

@@ -10,8 +10,8 @@ enum SheetType
     public function getName(): string
     {
         return match ($this) {
-            self::MINE => 'mine',
-            self::SHARE => 'share'
+            self::MINE => '自分のお金',
+            self::SHARE => 'お金'
         };
     }
 }

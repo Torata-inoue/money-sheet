@@ -48,11 +48,22 @@ class RakutenCardHistory implements HistoryInterface
 
     public static function skipRow(array $row): bool
     {
-        return empty($row[0]);
+        return empty($row[0]) || str_contains($row[0], '利用日');
     }
 
     public function getCardName(): string
     {
         return $this->card_name;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            $this->getTradingDate()->format('Y/m/d'),
+            $this->getClassification(),
+            $this->getMoney(),
+            $this->getContent(),
+            $this->getCardName()
+        ];
     }
 }
